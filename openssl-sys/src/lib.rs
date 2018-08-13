@@ -17,8 +17,17 @@ pub mod libc {
     pub type c_ulong = u64;
     pub type c_ulonglong = u64;
     pub type c_void = u8;
-    pub type size_t = u32;
+    pub type size_t = usize;
     pub type FILE = i32;
+   pub fn strlen(cs: *const c_char) -> size_t {
+     let mut s : *mut c_char = (cs as *mut c_char); 
+     while unsafe {*s} != ('\0' as c_char) {
+
+       s = ((s as size_t) + 1) as *mut c_char;
+
+     }
+     return (s as size_t) - (cs as size_t);
+   }
 }
 
 use libc::{c_char, c_int, c_long, c_uchar, c_uint, c_ulong, c_void, size_t, FILE};
