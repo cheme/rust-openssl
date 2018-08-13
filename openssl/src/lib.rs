@@ -8,8 +8,12 @@ extern crate cfg_if;
 extern crate foreign_types;
 #[macro_use]
 extern crate lazy_static;
+#[cfg(not(all(target_arch = "wasm32", not(target_os = "emscripten"))))]
 extern crate libc;
 extern crate openssl_sys as ffi;
+
+#[cfg(all(target_arch = "wasm32", not(target_os = "emscripten")))]
+use ffi::libc;
 
 #[cfg(test)]
 extern crate data_encoding;

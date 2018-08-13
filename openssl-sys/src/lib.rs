@@ -2,9 +2,27 @@
 #![allow(dead_code, overflowing_literals)]
 #![doc(html_root_url = "https://docs.rs/openssl-sys/0.9")]
 
+
+
+#[cfg(not(all(target_arch = "wasm32", not(target_os = "emscripten"))))]
 extern crate libc;
 
+#[cfg(all(target_arch = "wasm32", not(target_os = "emscripten")))]
+pub mod libc {
+    pub type c_char = i8;
+    pub type c_int = i32;
+    pub type c_long = i64;
+    pub type c_uchar = u8;
+    pub type c_uint = u32;
+    pub type c_ulong = u64;
+    pub type c_ulonglong = u64;
+    pub type c_void = u8;
+    pub type size_t = u32;
+    pub type FILE = i32;
+}
+
 use libc::{c_char, c_int, c_long, c_uchar, c_uint, c_ulong, c_void, size_t, FILE};
+
 use std::mem;
 use std::ptr;
 
